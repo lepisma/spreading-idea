@@ -1,0 +1,15 @@
+/*
+ Layout and basic things
+*/
+
+* {
+    font-family: "Raleway" !important;
+}
+
+#progress {
+    height: 80px;
+}
+
+#generate {
+    float: right;
+}

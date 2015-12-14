@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Spreading Idea
+        </title>
+        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.blue-deep_purple.min.css">
+        <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="./assets/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.min.js"></script>
+    </head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <body>
+        <div id="header">
+        </div>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--7-col" id="graph">
+            </div>
+            <div class="mdl-cell mdl-cell--5-col">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col" id="progress">
+                    </div>
+                    <div class="mdl-cell mdl-cell--6-col">
+                    <h3>Spreading idea</h3>
+                    </div>
+                </div>
+                <div>
+                    <p>
+                        Visualizing expression of views in a small world network. Inspired by <a href="http://arxiv.org/pdf/1410.8001v1.pdf">The hipster effect</a>.
+                        It is <strong>not complete</strong>. You can play around though. Source is <a href="https://github.com/lepisma/spreading-idea">here</a>.
+                    </p>
+                </div>
+                <div>
+                    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                        <div class="mdl-tabs__tab-bar">
+                            <a href="#init-panel" class="mdl-tabs__tab is-active">Initialize Population</a>
+                            <a href="#seed-panel" class="mdl-tabs__tab">Initialize States</a>
+                            <a href="#go-panel" class="mdl-tabs__tab">Run</a>
+                        </div>
+
+                        <div class="mdl-tabs__panel is-active" id="init-panel">
+                            <br><br>
+                            <div>
+                                We will setup a small world network similar to Watts–Strogatz model. Remember, <strong>Neighbor Size</strong> is an even number.
+                            </div>
+
+                            <div class="mdl-grid">
+
+                                <div class="mdl-call mdl-cell--6-col">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input id="population-input" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
+                                        <label class="mdl-textfield__label" for="population-input">Population Size</label>
+                                        <span class="mdl-textfield__error">Input is not a number!</span>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input id="neighbor-input" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
+                                        <label class="mdl-textfield__label" for="neighbor-input">Neighbor Size</label>
+                                        <span class="mdl-textfield__error">Input is not a number!</span>
+                                    </div>
+                                </div>
+
+                                <div class="mdl-cell mdl-cell--6-col">
+                                    <p>Set fraction of hipsters</p>
+                                    <input id="hipster-slider" class="mdl-slider mdl-js-slider" type="range"
+                                           min="0" max="100" value="50" tabindex="0">
+                                    <p>Set rewiring probability</p>
+                                    <input id="rewire-slider" class="mdl-slider mdl-js-slider" type="range"
+                                           min="0" max="100" value="20" tabindex="0">
+
+                                    <br><br>
+                                    <button id="generate" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                                        generate
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="mdl-tabs__panel" id="seed-panel">
+                            <br><br>
+                            <div>
+                                Click on nodes (anywhere near a node) to cycle between states. Neutral is gray. Other two colors present opposite views.
+                                <strong>Save</strong> to reuse the seed.
+                            </div>
+                            <br>
+                            <button id="reset-states" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                reset
+                            </button>
+                            <button id="save-states" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                                save
+                            </button>
+                        </div>
+                        <div class="mdl-tabs__panel" id="go-panel">
+                            <br><br>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--6-col">
+                                    Expression tendency tells how likely a node will express its view. Ideally, it should be drawn from a distribution. Right now, its a constant and mostly just speeds up/slows down things.
+                                </div>
+                                <div class="mdl-cell mdl-cell--6-col">
+                                    <button id="revert-states" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                        load states
+                                    </button>
+                                    <br><br>
+                                    Set expression tendency
+                                    <input id="tendency-slider" class="mdl-slider mdl-js-slider" type="range"
+                                           min="0" max="100" value="30" tabindex="0">
+                                    <br>
+                                    <button id="step" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                                        step
+                                    </button>
+                                    <button id="run" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                        play
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Imports -->
+        <script src="./assets/lib.js"></script>
+        <script src="./assets/plot.js"></script>
+        <script src="./assets/app.js"></script>
+    </body>
+</html>
