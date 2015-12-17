@@ -6,12 +6,8 @@
     font-family: "Raleway" !important;
 }
 
-.state-graph {
-    height: 120px;
-}
-
-#network-graph {
-    height: 450px;
+.graph-label {
+    display: none;
 }
 
 #generate {

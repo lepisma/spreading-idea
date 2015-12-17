@@ -22,7 +22,7 @@ $(document).ready(function() {
         hipsterPlot = new lib.StateSpaceChart(model, -1, "#hipster-graph");
         normalPlot = new lib.StateSpaceChart(model, 1, "#normal-graph");
         allPlot = new lib.StateSpaceChart(model, 0, "#all-graph");
-
+        $(".graph-label").show();
     });
 
     // Reset states to neutral
@@ -31,9 +31,9 @@ $(document).ready(function() {
             model.states[i] = 0;
         }
         networkGraph.update(model);
-        hipsterPlot.update(model);
-        normalPlot.update(model);
-        allPlot.update(model);
+        hipsterPlot.reset(model);
+        normalPlot.reset(model);
+        allPlot.reset(model);
     });
 
     // Save states
@@ -50,9 +50,9 @@ $(document).ready(function() {
             model.states[i] = savedStates[i];
         }
         networkGraph.update(model);
-        hipsterPlot.update(model);
-        normalPlot.update(model);
-        allPlot.update(model);
+        hipsterPlot.reset(model);
+        normalPlot.reset(model);
+        allPlot.reset(model);
     });
 
     // Step

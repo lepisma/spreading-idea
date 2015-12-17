@@ -8,9 +8,9 @@ var lib = lib || {};
 
     // Global color var
     var colors = [
-        "rgb(155, 89, 182)", // Color one
+        "rgb(155, 89, 182)", // Color one (purple)
         "rgb(200, 200, 200)", // Neutral
-        "rgb(52, 152, 219)" // Color two
+        "rgb(52, 152, 219)" // Color two (blue)
     ];
 
     // Population Network plotting
@@ -21,7 +21,7 @@ var lib = lib || {};
         this.nodes = new Array(model.N);
         this.links = [];
         this.width = $(divSelector).width(),
-        this.height = $(divSelector).height();
+        this.height = window.innerHeight - 120;//$(divSelector).height();
 
         // Generate data
         for (var i = 0; i < model.N; i++) {
@@ -163,7 +163,7 @@ var lib = lib || {};
     var StateSpaceChart = function(model, watch, divSelector) {
         this.watch = watch;
         this.width = $(divSelector).width();
-        this.height = $(divSelector).height();
+        this.height = (window.innerHeight - 240) / 3; //$(divSelector).height();
 
         // Setup canvas
         d3.select(divSelector + " canvas").remove();
@@ -203,6 +203,23 @@ var lib = lib || {};
         this.yScale = d3.scale.linear()
             .domain([0, this.len])
             .range([0, this.height]);
+
+        // Draw Axes
+        // purple, yaxis
+        this.context.beginPath();
+        this.context.strokeStyle = colors[0];
+        this.context.lineWidth = 8;
+        this.context.moveTo(0, 0);
+        this.context.lineTo(0, this.height);
+        this.context.stroke();
+
+        // blue, xaxis
+        this.context.beginPath();
+        this.context.strokeStyle = colors[2];
+        this.context.lineWidth = 8;
+        this.context.moveTo(0, 0);
+        this.context.lineTo(this.width, 0);
+        this.context.stroke();
     };
 
     // Update the new values
@@ -226,7 +243,8 @@ var lib = lib || {};
         }
 
         // Draw
-        this.context.strokeStyle = "rgba(20, 20, 20, 0.6)";
+        this.context.strokeStyle = "rgba(20, 20, 20, 0.3)";
+        this.context.lineWidth = 1;
         this.context.beginPath();
         this.context.moveTo(
             this.xScale(this.prevPoint.x),
@@ -240,6 +258,11 @@ var lib = lib || {};
 
         // Update tracker
         this.prevPoint = this.currentPoint;
+    };
+
+    StateSpaceChart.prototype.reset = function(model) {
+        this.update(model); // Move to the point
+        this.context.clearRect(4, 4, this.width, this.height); // Clear plot
     };
 
     glob.NetworkGraph = NetworkGraph;

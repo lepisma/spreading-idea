@@ -18,19 +18,30 @@
         <div id="header">
         </div>
         <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-cell mdl-cell--8-col">
                 <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--4-col state-graph" id="all-graph">
+                    <div class="mdl-cell mdl-cell--2-col">
+                        <div class="state-graph" id="hipster-graph">
+                        </div>
+                        <p class="graph-label">
+                            Hipsters
+                        </p>
+                        <div class="state-graph" id="normal-graph">
+                        </div>
+                        <p class="graph-label">
+                            Conformists
+                        </p>
+                        <div class="state-graph" id="all-graph">
+                        </div>
+                        <p class="graph-label">
+                            All
+                        </p>
                     </div>
-                    <div class="mdl-cell mdl-cell--4-col state-graph" id="normal-graph">
+                    <div class="mdl-cell mdl-cell--10-col" id="network-graph">
                     </div>
-                    <div class="mdl-cell mdl-cell--4-col state-graph" id="hipster-graph">
-                    </div>
-                </div>
-                <div id="network-graph">
                 </div>
             </div>
-            <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-cell mdl-cell--4-col">
                 <h3>Spreading idea</h3>
                 <div>
                     <p>
@@ -41,8 +52,8 @@
                 <div>
                     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                         <div class="mdl-tabs__tab-bar">
-                            <a href="#init-panel" class="mdl-tabs__tab is-active">Initialize Population</a>
-                            <a href="#seed-panel" class="mdl-tabs__tab">Initialize States</a>
+                            <a href="#init-panel" class="mdl-tabs__tab is-active">Population</a>
+                            <a href="#seed-panel" class="mdl-tabs__tab">States</a>
                             <a href="#go-panel" class="mdl-tabs__tab">Run</a>
                         </div>
 
