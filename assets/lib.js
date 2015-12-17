@@ -1,8 +1,8 @@
 // Population model
 
-var lib = {};
+var lib = lib || {};
 
-(function(mod) {
+(function(glob) {
     "use strict";
 
     // Assertion function
@@ -120,13 +120,23 @@ var lib = {};
     };
 
 
-    // Return counts
-    Model.prototype.counts = function() {
-        var total = this.states.reduce(function(prev, current) {
-            return prev + current;
-        });
+    // Return view counts
+    // popType -> either -1 or 1
+    Model.prototype.views = function(popType) {
 
-        return total / this.N;
+        var that = this;
+        var totalOne = this.states.filter(function(elem, i) {
+            return (elem == 1) && (that.population[i] == popType);
+        }).reduce(function(prev, current) {
+            return prev + current;
+        }, 0);
+        var totalTwo = this.states.filter(function(elem, i) {
+            return (elem == -1) && (that.population[i] == popType);
+        }).reduce(function(prev, current) {
+            return prev + current;
+        }, 0);
+
+        return [totalOne, -totalTwo];
     };
 
     // Reset states
@@ -141,5 +151,5 @@ var lib = {};
         this.states[i] += (this.states[i] == 1) ? -2 : 1;
     };
 
-    mod.Model = Model;
+    glob.Model = Model;
 }(lib));

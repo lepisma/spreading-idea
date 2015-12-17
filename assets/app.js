@@ -3,11 +3,14 @@
 
 var flag = false,
     model,
+    networkGraph,
+    hipsterPlot,
+    normalPlot,
+    allPlot,
     savedStates;
 
 $(document).ready(function() {
 
-    progressInit();
     // Generate model
     $("#generate").click(function() {
         model = new lib.Model(
@@ -15,7 +18,11 @@ $(document).ready(function() {
             parseInt($("#hipster-slider")[0].value) / 100,
             parseInt($("#neighbor-input").val()),
             parseInt($("#rewire-slider")[0].value) / 100);
-        renderGraph(model);
+        networkGraph = new lib.NetworkGraph(model, "#network-graph");
+        hipsterPlot = new lib.StateSpaceChart(model, -1, "#hipster-graph");
+        normalPlot = new lib.StateSpaceChart(model, 1, "#normal-graph");
+        allPlot = new lib.StateSpaceChart(model, 0, "#all-graph");
+
     });
 
     // Reset states to neutral
@@ -23,8 +30,10 @@ $(document).ready(function() {
         for (var i = 0; i < model.N; i++) {
             model.states[i] = 0;
         }
-        updateGraph(model);
-        progressInit();
+        networkGraph.update(model);
+        hipsterPlot.update(model);
+        normalPlot.update(model);
+        allPlot.update(model);
     });
 
     // Save states
@@ -40,16 +49,20 @@ $(document).ready(function() {
         for (var i = 0; i < model.N; i++) {
             model.states[i] = savedStates[i];
         }
-        updateGraph(model);
-        progressInit();
+        networkGraph.update(model);
+        hipsterPlot.update(model);
+        normalPlot.update(model);
+        allPlot.update(model);
     });
 
     // Step
     $("#step").click(function() {
         model.setTendency(parseInt($("#tendency-slider")[0].value) / 100);
         model.evolve();
-        updateProgress(model.counts());
-        updateGraph(model);
+        networkGraph.update(model);
+        hipsterPlot.update(model);
+        normalPlot.update(model);
+        allPlot.update(model);
     });
 
     // Play pause
@@ -67,8 +80,10 @@ $(document).ready(function() {
         (function loop () {
             setTimeout(function () {
                 model.evolve();
-                updateProgress(model.counts());
-                updateGraph(model);
+                networkGraph.update(model);
+                hipsterPlot.update(model);
+                normalPlot.update(model);
+                allPlot.update(model);
                 if (flag) loop();
             }, 100);
         })();
