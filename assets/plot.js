@@ -242,8 +242,12 @@ var lib = lib || {};
             };
         }
 
+        // Fade
+        this.context.fillStyle = "rgba(255, 255, 255, 0.05)";
+        this.context.fillRect(4, 4, this.width, this.height);
+
         // Draw
-        this.context.strokeStyle = "rgba(20, 20, 20, 0.3)";
+        this.context.strokeStyle = "rgba(20, 20, 20, 1.0)";
         this.context.lineWidth = 1;
         this.context.beginPath();
         this.context.moveTo(
